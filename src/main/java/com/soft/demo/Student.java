@@ -1,10 +1,17 @@
 package com.soft.demo;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "students")
 public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String firstname;
     private String lastname;
     private String matricule;
-
 
     public Student() {
     }
@@ -13,6 +20,14 @@ public class Student {
         this.firstname = firstname;
         this.lastname = lastname;
         this.matricule = matricule;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstname() {
@@ -31,12 +46,12 @@ public class Student {
         this.lastname = lastname;
     }
 
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
-    }
-
     public String getMatricule() {
         return matricule;
+    }
+
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
     }
 
     @Override
