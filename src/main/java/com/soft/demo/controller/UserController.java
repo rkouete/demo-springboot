@@ -3,6 +3,7 @@ package com.soft.demo.controller;
 import com.soft.demo.dto.UserRequest;
 import com.soft.demo.dto.UserResponse;
 import com.soft.demo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,10 +21,12 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserResponse> signup(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<UserResponse> signup(@RequestBody @Valid UserRequest userRequest) {
         //  validate input data
         // check unicity of email
         // encore password (use BCrypt. You can configure a password encoder)
+        if(userService.existsByEmail(userRequest.email()))
+            return ResponseEntity.badRequest().body(new UserResponse("Email already exists", null));
         try {
             UserResponse response = userService.signUp(userRequest);
             return ResponseEntity.ok(response);
@@ -32,6 +35,4 @@ public class UserController {
         }
     }//
     // implements login endpoint.
-
-
 }

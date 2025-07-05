@@ -6,4 +6,5 @@ import com.soft.demo.dto.UserResponse;
 
 public interface UserService {
     UserResponse signUp(UserRequest userRequest);
+    boolean existsByEmail(String email);
 }
